@@ -7,16 +7,88 @@
 
 
 
+/* You just misspelled me / and this is crazy / so when that happens / just call me maybe */
+//void callback(char* word) {
+//    printf("Word is fail: '%s'\n", word);
+//}
+SpellCheckerCallback callback(char *unmatchedWord)
+{
+    // Precondition: Assume character string unmatchedWord is null-terminated
+    
+    // Trivially normalize all letters by transform to lowercase
+    // i.e. A-Z mapped to a-z
+    
+    // Check that the word contains only characters in the range
+    // between [a-z] (i.e. A-Z), [0-9], and [0x80-0xFF].
+    
+    // All other characters
+    // are considered to be delimeters that seperate words.
+    
+    printf("Word is fail: '%s'\n", unmatchedWord);
+    
+    return 0;
+}
+
+/*
+ spell-checker.c:45:34: warning: incompatible pointer types passing
+ 'SpellCheckerCallback (char *)' to parameter of type
+ 'SpellCheckerCallback' (aka 'void (*)(const char *)')
+ [-Wincompatible-pointer-types]
+ spellCheck(dictionary, text, callback); // SpellCheckerCallback callback
+ ^~~~~~~~
+ ./spell-checker.h:145:26: note: passing argument to parameter 'callback' here
+ SpellCheckerCallback callback);
+ ^
+ 1 warning generated.
+ lizz-natalia:relearning-c lizz$
+
+ */
+
+
 int main()
 {
     printf("This is the start of the main function.\n");
-    
+ 
     SpellCheckerDictionaryHandle dictionary = createSpellCheckerDictionary();
+    
+    // Read words in from a provided file
     const char *word = "hello";
     spellCheckerAddWord(dictionary, word);
+
+    // Read in another file to spell-check
+    const char *text = "hi hello hey heLLo";
+    spellCheck(dictionary, text, callback); // SpellCheckerCallback callback
+    
     closeSpellCheckerDictionary(dictionary);
     return 0;
 };
+
+//
+//
+//
+void spellCheck(SpellCheckerDictionaryHandle dict,
+                const char *text,
+                SpellCheckerCallback callback)
+{
+    printf("function: spellCheck \n");
+    
+    /*
+     * Design considerations for the spell-checker include:
+     Req 1:     Spell-checker should scale to a large word dictionary
+     (on the order of the size of the English language, i.e. ~200,000)
+     
+     *     3. Memory efficiency of the dictionary and cost of
+     *     building the dictionary are considerations, but are
+     *     secondary to performance of spell-checking.
+     
+     Req 2:     Optimize for efficiency of spell-checking
+     a large number of large documents with a single dictionary
+     
+     1. Scalable to large word dictionary
+     3. performance of spell checking first, second is mem efficiency and cost of building dict
+     */
+    
+}
 
 
 //
@@ -30,22 +102,9 @@ struct _SpellCheckerDictionary *SpellCheckerDictionaryHandle
     
    // _SpellCheckerDictionary
 };
-
-void (*SpellCheckerCallback)(const char *unmatchedWord)
-{
-    // Precondition: Assume character string unmatchedWord is null-terminated
-    
-    // Trivially normalize all letters by transform to lowercase
-    // i.e. A-Z mapped to a-z
-    
-    // Check that the word contains only characters in the range
-    // between [a-z] (i.e. A-Z), [0-9], and [0x80-0xFF].
-
-    // All other characters
-    // are considered to be delimeters that seperate words.
-    
-};
 */
+
+
 
 
 
@@ -104,10 +163,7 @@ int closeSpellCheckerDictionary(SpellCheckerDictionaryHandle dict)
     // Flag if the handle was successfully closed
     // returns 0 on success, -1 on error
     int success = -1;
-    
-
-    
-
+  
     
     // Free all resources associated with the dictionary,
     // malloc...
@@ -126,26 +182,4 @@ int closeSpellCheckerDictionary(SpellCheckerDictionaryHandle dict)
 }
 
 
-//
-//
-//
-void spellCheck(SpellCheckerDictionaryHandle dict,
-                const char *text,
-                SpellCheckerCallback callback)
-{
-    /*
-     * Design considerations for the spell-checker include:
-     Req 1:     Spell-checker should scale to a large word dictionary
-                (on the order of the size of the English language, i.e. ~200,000)
-     
-     *     3. Memory efficiency of the dictionary and cost of
-     *     building the dictionary are considerations, but are
-     *     secondary to performance of spell-checking.
-     
-     Req 2:     Optimize for efficiency of spell-checking
-                a large number of large documents with a single dictionary
-     
-     1. Scalable to large word dictionary
-     3. performance of spell checking first, second is mem efficiency and cost of building dict
-     */
-}
+
