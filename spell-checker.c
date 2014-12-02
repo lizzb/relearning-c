@@ -1,5 +1,5 @@
-// Use of 3rd-party functions and libraries is prohibited,
-// other than the basic functions provided by glibc.
+// Req 4:   Use of 3rd-party functions and libraries is prohibited,
+//          other than the basic functions provided by glibc.
 #include <stdio.h>
 
 // Include header file provided by Surround.io
@@ -110,6 +110,7 @@ int closeSpellCheckerDictionary(SpellCheckerDictionaryHandle dict)
 
     
     // Free all resources associated with the dictionary,
+    // malloc...
     
     // and the handle becomes invalid.
     
@@ -120,7 +121,6 @@ int closeSpellCheckerDictionary(SpellCheckerDictionaryHandle dict)
     
     // Dictionary was successfully closed
     success = 0;
-    
     
     return success;
 }
@@ -135,25 +135,17 @@ void spellCheck(SpellCheckerDictionaryHandle dict,
 {
     /*
      * Design considerations for the spell-checker include:
-     *     1. It should scale to a large word dictionary (on the
-     *     order of the size of the English language)
-     
-     *     2. It should optimize for efficiency of spell-checking
-     *     a large number of large documents with a single
-     *     dictionary.
+     Req 1:     Spell-checker should scale to a large word dictionary
+                (on the order of the size of the English language, i.e. ~200,000)
      
      *     3. Memory efficiency of the dictionary and cost of
      *     building the dictionary are considerations, but are
      *     secondary to performance of spell-checking.
      
-     *     4. Use of 3rd-party functions and libraries is
-     *     prohibited, other than the basic functions provided by
-     *     glibc.
-     
+     Req 2:     Optimize for efficiency of spell-checking
+                a large number of large documents with a single dictionary
      
      1. Scalable to large word dictionary
-     2. optimize efficiency of spell checking large # of large documents with single dictionary
      3. performance of spell checking first, second is mem efficiency and cost of building dict
-     4. nothing external
      */
 }
